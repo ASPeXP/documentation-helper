@@ -8,6 +8,8 @@ import pinecone
 import os
 load_dotenv("./.env")
 
+from const import INDEX_NAME
+
 pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment=os.getenv("PINECONE_ENVIRONMENT_REGION"))
 
 def ingest_doc() -> None:
@@ -36,7 +38,7 @@ def ingest_doc() -> None:
 
     print(f"Going to insert {len(documents)} to Pinecone")
     embeddings = OpenAIEmbeddings()
-    Pinecone.from_documents(documents, embeddings, index_name="langchain-doc-index")
+    Pinecone.from_documents(documents, embeddings, index_name=os.getenv("INDEX_NAME"))
     print("****** Added to Pinecone vectorstore vectors ******")
 
 

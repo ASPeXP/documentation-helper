@@ -8,6 +8,7 @@ __pycache__/
 
 langchain-docs_api/
 langchain-docs/
+langchain-docs-from-zip/
 langchain-docs1/
 # Distribution / packaging
 .Python
