@@ -6,11 +6,14 @@ from langchain.vectorstores import Pinecone
 import pinecone
 
 import os
+
 load_dotenv("./.env")
 
-from const import INDEX_NAME
+pinecone.init(
+    api_key=os.getenv("PINECONE_API_KEY"),
+    environment=os.getenv("PINECONE_ENVIRONMENT_REGION"),
+)
 
-pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment=os.getenv("PINECONE_ENVIRONMENT_REGION"))
 
 def ingest_doc() -> None:
     loader = ReadTheDocsLoader(
@@ -40,7 +43,6 @@ def ingest_doc() -> None:
     embeddings = OpenAIEmbeddings()
     Pinecone.from_documents(documents, embeddings, index_name=os.getenv("INDEX_NAME"))
     print("****** Added to Pinecone vectorstore vectors ******")
-
 
 
 if __name__ == "__main__":

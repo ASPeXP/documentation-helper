@@ -14,16 +14,13 @@ pinecone.init(
     environment=os.getenv("PINECONE_ENVIRONMENT_REGION"),
 )
 
-"""
-query: "what is a langchain chain?"
-"""
-
 
 def run_llm(query: str) -> any:
     embeddings = OpenAIEmbeddings()
     docsearch = Pinecone.from_existing_index(
         index_name=os.getenv("INDEX_NAME"), embedding=embeddings
     )
+ 
     chat = ChatOpenAI(verbose=True, temperature=0)
     qa = RetrievalQA.from_chain_type(
         llm=chat,
@@ -32,6 +29,7 @@ def run_llm(query: str) -> any:
         return_source_documents=True,
     )
     return qa({"query": query})
+
 
 if __name__ == "__main__":
     print(run_llm(query="What is Langchain?"))
